@@ -1,1 +1,4 @@
 /printers.csv
+snmp-env/
+__pycache__/
+*.pyc
