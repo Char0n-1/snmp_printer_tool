@@ -66,6 +66,14 @@ def load_ips_from_csv(file_path):
                 ip_list.append({'ip': row['ip'].strip(), 'comment': comment})
     return ip_list
 
+def extract_percent_value(percent_str):
+    if percent_str.endswith('%'):
+        try:
+            return int(percent_str.rstrip('%'))
+        except ValueError:
+            return 999
+    return 999  # for 'Unknown' or errors
+
 async def check_printers(file_path):
     ip_entries = load_ips_from_csv(file_path)
     table_data = []
@@ -80,8 +88,14 @@ async def check_printers(file_path):
         else:
             level = result['level']
             max_capacity = result['max_capacity']
-            if level >= 0 and max_capacity > 0:
-                percent = f"{round((level / max_capacity) * 100)}%"
+
+            if level >= 0:
+                if level == 0:
+                    percent = "0%"
+                elif max_capacity > 0:
+                    percent = f"{round((level / max_capacity) * 100)}%"
+                else:
+                    percent = "Unknown"
             else:
                 percent = "Unknown"
 
@@ -93,6 +107,9 @@ async def check_printers(file_path):
                 max_capacity,
                 percent
             ])
+
+    # Sort based on computed percentage
+    table_data.sort(key=lambda row: extract_percent_value(row[5]))  # Toner % is column index 5
 
     headers = ["IP Address", "Description", "Comment", "Remaining", "Max Capacity", "Toner %"]
     print(tabulate(table_data, headers=headers, tablefmt="grid"))

@@ -79,7 +79,7 @@ python check_toner.py
 | IP Address       | Description    | Comment     | Remaining | Max Capacity  | Toner %   |
 +------------------+----------------+-------------+-----------+---------------+-----------+
 | 192.168.1.97     | Black Toner    |             | 8727      | 10000         | 87%       |
-| 192.168.1.114    | Black Toner    | test lab    | -3        | 10000         | Unknown   |
+| 192.168.1.114    | Black Toner    | test lab    | -3        | -2            | Unknown   |
 | 192.168.1.121    | Drum Cartridge | main office | 5000      | 5000          | 100%      |
 +------------------+----------------+-------------+-----------+---------------+-----------+
 ```
@@ -88,7 +88,7 @@ python check_toner.py
 
 ## 🛠️ Customization
 
-* To check other consumables (e.g., Drum, Color toner), change the `index` in the script.
+* To check other consumables (e.g., Drum, Color toner), change the oid in the script.
 * You can export to CSV or schedule the script as a cron job if needed.
 
 ---
